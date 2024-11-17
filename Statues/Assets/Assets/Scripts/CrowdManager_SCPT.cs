@@ -32,11 +32,18 @@ public class CrowdManager_SCPT : MonoBehaviour
     private void OnTriggerEnter(Collider collision)
     {
         Debug.Log("Hit!");
-        /*Collider otherCollider = collision.GetComponent<Collider>();
+        Collider otherCollider = collision.GetComponent<Collider>();
         if (!collidersInContact.Contains(otherCollider))
         {
             collidersInContact.Add(otherCollider);
-        }*/
+        }
+    }
+
+    public void AgentCrowdEffect( int calm, AgentType typeReceiving ){
+        foreach( Collider collider in collidersInContact ){
+            BehaviourManager_SCPT behaviourManager = collider.GetComponentInParent<BehaviourManager_SCPT>();  
+            behaviourManager.ModifyCalm( calm, typeReceiving);      
+            }
     }
 
 }

@@ -266,6 +266,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0434f01487ef2dd49ad124978142a0a5, type: 3}
+--- !u!114 &432621995 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3371744932227090262, guid: d8c0a3602dcebdd49b1fe498ca510657, type: 3}
+  m_PrefabInstance: {fileID: 1986424501}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c65a02f8e30b4bb4085db672f0095c76, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -360,6 +371,17 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+--- !u!114 &892715039 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3371744932227090262, guid: d8c0a3602dcebdd49b1fe498ca510657, type: 3}
+  m_PrefabInstance: {fileID: 4204640195063047880}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c65a02f8e30b4bb4085db672f0095c76, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0
@@ -532,6 +554,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1957618437959678622, guid: d8c0a3602dcebdd49b1fe498ca510657, type: 3}
+      propertyPath: crowdManager
+      value: 
+      objectReference: {fileID: 432621995}
     - target: {fileID: 2574979948010360550, guid: d8c0a3602dcebdd49b1fe498ca510657, type: 3}
       propertyPath: m_IncludeLayers.m_Bits
       value: 64
@@ -563,7 +589,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1193406117375380641, guid: d8c0a3602dcebdd49b1fe498ca510657, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -8.4
+      value: -8.45
       objectReference: {fileID: 0}
     - target: {fileID: 1193406117375380641, guid: d8c0a3602dcebdd49b1fe498ca510657, type: 3}
       propertyPath: m_LocalPosition.y
@@ -601,6 +627,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1957618437959678622, guid: d8c0a3602dcebdd49b1fe498ca510657, type: 3}
+      propertyPath: crowdManager
+      value: 
+      objectReference: {fileID: 892715039}
     - target: {fileID: 2574979948010360550, guid: d8c0a3602dcebdd49b1fe498ca510657, type: 3}
       propertyPath: m_IncludeLayers.m_Bits
       value: 64
