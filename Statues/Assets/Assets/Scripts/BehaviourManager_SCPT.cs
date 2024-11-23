@@ -97,9 +97,11 @@ public class BehaviourManager_SCPT : MonoBehaviour
 
     void PanicCheck(){
          if( panic > calm ){
+            if(Random.Range(0, panic) > calm){ //daca calm e sub panic, sansa de panicare direct proportionala cu cat de mult e calm sub panic
             isPanicked = true;
             Death();
             Debug.Log("e panicat: " + isPanicked);
+            }
          }
     }
 
