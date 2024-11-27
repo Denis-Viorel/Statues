@@ -37,6 +37,7 @@ public class CrowdManager_SCPT : MonoBehaviour
         {
             collidersInContact.Add(otherCollider);
         }
+        
     }
 
     public void AgentCrowdEffect( int calm, AgentType typeReceiving ){

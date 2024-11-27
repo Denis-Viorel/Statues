@@ -29,7 +29,7 @@ public class BehaviourManager_SCPT : MonoBehaviour
         calm = Random.Range(calmMin, 100);
         // calm = 1;
         SetTypeAgent();
-        CrowdManager_SCPT crowdManager = GetComponentInChildren<CrowdManager_SCPT>();   
+        crowdManager = GetComponentInChildren<CrowdManager_SCPT>();   
         time = Time.time; 
     }
 
