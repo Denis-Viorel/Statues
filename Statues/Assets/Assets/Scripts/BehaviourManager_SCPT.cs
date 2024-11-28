@@ -1,9 +1,12 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Pathfinding;
 using Unity.VisualScripting;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
- public enum AgentType{
+public enum AgentType{
         Protector,
         Saboteur,
         Normie
@@ -18,25 +21,53 @@ public class BehaviourManager_SCPT : MonoBehaviour
     private int calm;
     private int calmMin;
     private int panic;
+    private int panicCheck;
+    private int _calmLossPerSecond;
     private float chanceProtector = 0.10f;
     private float chanceSaboteur = 0.10f;
     private float typeRoll;
     private float time;
     private bool isPanicked = false;
+    private FollowerEntity _follower;
+
+    private bool redLightActive = true;
     // Start is called before the first frame update
     void Start()
     {
-        calm = Random.Range(calmMin, 100);
+        if (globalManager == null)
+        {
+            globalManager = GameObject.Find("GlobalManager").GetComponent<GlobalManager_SCPT>();
+        }
         // calm = 1;
         SetTypeAgent();
-        crowdManager = GetComponentInChildren<CrowdManager_SCPT>();   
+        calm = Random.Range(calmMin, 100);
+        if (crowdManager == null)
+        {
+            crowdManager = GetComponentInChildren<CrowdManager_SCPT>();
+        }   
         time = Time.time; 
+        globalManager.greenLight.AddListener(GreenLight);
+        globalManager.redLight.AddListener(RedLight);
+        _follower = GetComponent<FollowerEntity>();
+        Debug.Log($"Setup: ID - {gameObject.GetInstanceID()}, tip - {type}, calm - {calm}, follower gasit: {_follower.isActiveAndEnabled}");
     }
 
+    void GreenLight()
+    {
+        Debug.Log("GreenLight");
+        redLightActive = false;
+        _follower.isStopped = false;
+    }
+
+    void RedLight()
+    {
+        Debug.Log("RedLight");
+        redLightActive = true;
+        _follower.isStopped = true;
+    }
     // Update is called once per frame
     void Update()
     {
-        Debug.Log("Type: " + type);
         
     }
 
@@ -45,20 +76,21 @@ public class BehaviourManager_SCPT : MonoBehaviour
     }
 
     public void ModifyCalm( int value, AgentType typeReceiving ){
-        Debug.Log("Valori initiale: " + "calm primit: " + value);
+        Debug.Log($"Valori initiale: ID - {gameObject.GetInstanceID()}, tip - {type}, calm - {calm}, calm primit - {value}, tip agent primit - {typeReceiving}");
+        /*Debug.Log("Valori initiale: " + "calm primit: " + value);
         Debug.Log("Valori initiale: " + "tip agent primit: " + typeReceiving);
-        Debug.Log("Valori initiale: " + "calm: " + calm);
+        Debug.Log("Valori initiale: " + "calm: " + calm);*/
         switch ( type ){
             case AgentType.Protector:{
                  if( calm < value && typeReceiving != AgentType.Saboteur )
                     calm ++;
-                 Debug.Log("Protector:" + calm );
+                 //Debug.Log("Protector:" + calm );
                  break;
             }
             case AgentType.Saboteur:{
                 if( calm > value && typeReceiving != AgentType.Protector )
                         calm--;
-                Debug.Log("Saboteur:" + calm );
+                //Debug.Log("Saboteur:" + calm );
                 break;
             }
             case AgentType.Normie:{
@@ -66,11 +98,11 @@ public class BehaviourManager_SCPT : MonoBehaviour
                     calm ++;
                 else if( calm > value && typeReceiving != AgentType.Protector )
                         calm--;
-                Debug.Log("Normie:" + calm );
+                //Debug.Log("Normie:" + calm );
                  break;
             }
         }
-        Debug.Log("Dupa switch: " + calm);
+        Debug.Log($"Dupa switch: ID - {gameObject.GetInstanceID()}, tip - {type}, calm - {calm}, calm primit - {value}, tip agent primit - {typeReceiving}");
     }
 
     void SetTypeAgent(){
@@ -80,6 +112,7 @@ public class BehaviourManager_SCPT : MonoBehaviour
             chanceSaboteur = globalManager.chanceSaboteur;
             panic = globalManager.panic;
             calmMin = globalManager.calmMin;
+            _calmLossPerSecond = globalManager.calmLossPerSecond; 
         }
 
         typeRoll = Random.value; // returns numbers between {0 - 1}
@@ -97,11 +130,15 @@ public class BehaviourManager_SCPT : MonoBehaviour
 
     void PanicCheck(){
          if( panic > calm ){
-            if(Random.Range(0, panic) > calm){ //daca calm e sub panic, sansa de panicare direct proportionala cu cat de mult e calm sub panic
-            isPanicked = true;
-            Death();
-            Debug.Log("e panicat: " + isPanicked);
-            }
+             //daca calm e sub panic, sansa de panicare direct proportionala cu cat de mult e calm sub panic
+             panicCheck = Random.Range(0, panic);
+             Debug.Log($"Panic check: ID - {gameObject.GetInstanceID()}, valoare - {panicCheck}, calm - {calm}");
+             if(panicCheck > calm)
+             {
+                isPanicked = true;
+                Death();
+                Debug.Log($"Panicat: {gameObject.GetInstanceID()}");
+             }
          }
     }
 
@@ -111,11 +148,12 @@ public class BehaviourManager_SCPT : MonoBehaviour
     }
 
     void FixedUpdate(){
-        if( time <= Time.time ){
+        if( redLightActive && time <= Time.time ){
             time = Time.time + 1f;
-            Debug.Log("time: " + time);
             crowdManager.AgentCrowdEffect( calm, type );
             PanicCheck();
+            calm -= _calmLossPerSecond;
+            Debug.Log($"Red Light Loss: ID - {gameObject.GetInstanceID()}, calm - {calm}");
         }
     }
 }
