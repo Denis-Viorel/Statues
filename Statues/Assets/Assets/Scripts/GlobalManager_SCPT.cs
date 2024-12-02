@@ -15,6 +15,10 @@ public class GlobalManager_SCPT : MonoBehaviour
     [SerializeField] public int calmMin = 80;
     [Tooltip("Cat calm se pierde pe secunda in red light")]
     [SerializeField] public int calmLossPerTick = 1;
+    [Tooltip("Cat calm se pierde in jur la moarte")] 
+    [SerializeField] public int calmLossDeath = 10;
+    [Tooltip("Variatie viteza")] 
+    [SerializeField] public float speedVariation = 1;
 
     private bool lightSwitch = false; //false = red light, true = green light;
     // Start is called before the first frame update

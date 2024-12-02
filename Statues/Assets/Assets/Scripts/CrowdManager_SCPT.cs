@@ -30,11 +30,11 @@
             
         }
 
-        public void AgentCrowdEffect( int calm, AgentType typeReceiving ){
+        public void AgentCrowdEffect( int calm, AgentType typeReceiving, bool isDeathEffect ){
             Debug.Log("Colliders: " + collidersInContact.Count);
             foreach( Collider collision in collidersInContact ){
                 BehaviourManager_SCPT behaviourManager = collision.GetComponentInParent<BehaviourManager_SCPT>();  
-                behaviourManager.ModifyCalm( calm, typeReceiving);
+                behaviourManager.ModifyCalm( calm, typeReceiving, isDeathEffect );
                 }
         }
 
