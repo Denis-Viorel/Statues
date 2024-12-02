@@ -112,7 +112,7 @@ public class BehaviourManager_SCPT : MonoBehaviour
             chanceSaboteur = globalManager.chanceSaboteur;
             panic = globalManager.panic;
             calmMin = globalManager.calmMin;
-            _calmLossPerSecond = globalManager.calmLossPerSecond; 
+            _calmLossPerSecond = globalManager.calmLossPerTick; 
         }
 
         typeRoll = Random.value; // returns numbers between {0 - 1}
