@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6559166514161563154}
   - component: {fileID: 2574979948010360550}
   - component: {fileID: 3371744932227090262}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: AgentsDetectionSphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -46,7 +46,7 @@ SphereCollider:
     m_Bits: 64
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 129
+    m_Bits: 1
   m_LayerOverridePriority: 0
   m_IsTrigger: 1
   m_ProvidesContacts: 1
@@ -116,11 +116,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -6769691430286951708, guid: 4bf7653221973074db8f1c9b589ddd36, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -8.45
+      value: 3.04
       objectReference: {fileID: 0}
     - target: {fileID: -6769691430286951708, guid: 4bf7653221973074db8f1c9b589ddd36, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -6.31
+      value: -6.307
       objectReference: {fileID: 0}
     - target: {fileID: -6769691430286951708, guid: 4bf7653221973074db8f1c9b589ddd36, type: 3}
       propertyPath: m_LocalPosition.z
@@ -396,7 +396,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6635245195314443262, guid: 4bf7653221973074db8f1c9b589ddd36, type: 3}
       propertyPath: m_Layer
-      value: 6
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6782231808622393609, guid: 4bf7653221973074db8f1c9b589ddd36, type: 3}
       propertyPath: m_Layer
@@ -441,13 +441,13 @@ PrefabInstance:
       addedObject: {fileID: 5648104835216645849}
     - targetCorrespondingSourceObject: {fileID: 6635245195314443262, guid: 4bf7653221973074db8f1c9b589ddd36, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 300559899905245075}
+      addedObject: {fileID: 4077096455215787665}
     - targetCorrespondingSourceObject: {fileID: 6635245195314443262, guid: 4bf7653221973074db8f1c9b589ddd36, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 4268228735854725429}
+      addedObject: {fileID: 9084471372955196357}
     - targetCorrespondingSourceObject: {fileID: 6635245195314443262, guid: 4bf7653221973074db8f1c9b589ddd36, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1054063168019109437}
+      addedObject: {fileID: 1996707368606125956}
   m_SourcePrefab: {fileID: -4161369568681901532, guid: 4bf7653221973074db8f1c9b589ddd36, type: 3}
 --- !u!4 &1193406117375380641 stripped
 Transform:
@@ -493,10 +493,25 @@ CapsuleCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.44968697
-  m_Height: 2.0814989
+  m_Height: 1.7
   m_Direction: 1
   m_Center: {x: 0, y: 0.83299387, z: 0.050313026}
---- !u!114 &300559899905245075
+--- !u!114 &4077096455215787665
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7969063813969921467}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9679e68a0f1144e79c664d9a11ca121, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 1073741824
+  target: {fileID: 0}
+  useRotation: 0
+--- !u!114 &9084471372955196357
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -514,22 +529,22 @@ MonoBehaviour:
     height: 2
   movement:
     follower:
-      rotationSpeed: 180
+      rotationSpeed: 600
       speed: 5
       maxRotationSpeed: 720
       maxOnSpotRotationSpeed: 720
       slowdownTime: 0.5
       slowdownTimeWhenTurningOnSpot: 0
-      desiredWallDistance: 1
+      desiredWallDistance: 0.5
       leadInRadiusWhenApproachingDestination: 1
       allowRotatingOnSpotBacking: 1
     debugFlags: 0
-    stopDistance: 1
-    rotationSmoothing: 0.1
-    positionSmoothing: 0.1
+    stopDistance: 0.2
+    rotationSmoothing: 0
+    positionSmoothing: 0
     groundMask:
       serializedVersion: 2
-      m_Bits: 128
+      m_Bits: 4294967295
     isStopped: 0
   managedState:
     rvoSettings:
@@ -555,22 +570,7 @@ MonoBehaviour:
   movementPlaneSourceBacking: 0
   syncPosition: 1
   syncRotation: 1
---- !u!114 &4268228735854725429
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7969063813969921467}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c9679e68a0f1144e79c664d9a11ca121, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  version: 1073741824
-  target: {fileID: 0}
-  useRotation: 1
---- !u!54 &1054063168019109437
+--- !u!54 &1996707368606125956
 Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -596,4 +596,4 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 2
+  m_CollisionDetection: 0
