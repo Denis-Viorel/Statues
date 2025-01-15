@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -25,6 +26,7 @@ public class GlobalManager_SCPT : MonoBehaviour
 
     public UnityEvent greenLight = new UnityEvent();
     public UnityEvent redLight = new UnityEvent();
+
     void Start()
     {
         
@@ -37,7 +39,7 @@ public class GlobalManager_SCPT : MonoBehaviour
         {
             LightSwitch();
         }
-    }
+    } 
 
     void LightSwitch()
     {

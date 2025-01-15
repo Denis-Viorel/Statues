@@ -17,6 +17,8 @@ public class BehaviourManager_SCPT : MonoBehaviour
     AgentType type = new AgentType();
     [SerializeField]CrowdManager_SCPT crowdManager;
     [SerializeField]GlobalManager_SCPT globalManager;
+    [SerializeField]AgentDisplayManager agentDisplayManager;
+    [SerializeField]UI_Manager agentUIManager;
 
     private int calm;
     private int calmMin;
@@ -54,6 +56,9 @@ public class BehaviourManager_SCPT : MonoBehaviour
         _follower = GetComponent<FollowerEntity>();
         _follower.maxSpeed += Random.Range(-_speedVariation, _speedVariation);
         Debug.Log($"Setup: ID - {gameObject.GetInstanceID()}, tip - {type}, calm - {calm}, follower gasit: {_follower.isActiveAndEnabled}");
+
+        /* Set the calm bar */
+        agentDisplayManager.UpdateCalmBar(calm);
     }
 
     void GreenLight()
@@ -177,5 +182,19 @@ public class BehaviourManager_SCPT : MonoBehaviour
             calm -= _calmLossPerSecond;
             Debug.Log($"Red Light Loss: ID - {gameObject.GetInstanceID()}, calm - {calm}");
         }
+
+        /* Update calm bar */
+        agentDisplayManager.UpdateCalmBar(calm);
+    }
+
+    /* When hovering, display the information panel */
+    void OnMouseOver()
+    {
+        agentUIManager.SetPanelActive("20", "Elena", "WebDev", "Fast", "Protector");
+    }
+
+    private void OnMouseExit()
+    {
+        agentUIManager.SetPanelInactive();
     }
 }
