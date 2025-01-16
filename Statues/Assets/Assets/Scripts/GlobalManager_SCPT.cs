@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
@@ -26,6 +27,7 @@ public class GlobalManager_SCPT : MonoBehaviour
 
     public UnityEvent greenLight = new UnityEvent();
     public UnityEvent redLight = new UnityEvent();
+    public List<int> ids_used = new List<int>();
 
     void Start()
     {

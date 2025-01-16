@@ -15,7 +15,7 @@ public class UI_Manager : MonoBehaviour
         panel.SetActive(false);
     }
 
-    public void SetPanelActive(string agentNumber, string agentName, string agentJob, string agentSpeed, string agentClass)
+    public void SetPanelActive(int agentNumber, string agentName, string agentJob, string agentSpeed, AgentType agentClass)
     {
         panel.SetActive(true);
 

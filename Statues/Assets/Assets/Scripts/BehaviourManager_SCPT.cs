@@ -26,13 +26,20 @@ public class BehaviourManager_SCPT : MonoBehaviour
     private int panicCheck;
     private int _calmLossPerSecond;
     private int _calmLossDeath;
+    private int agentId;
     private float chanceProtector = 0.10f;
     private float chanceSaboteur = 0.10f;
     private float typeRoll;
     private float time;
     private float _speedVariation;
+    private float rollSpeed;
     private bool isPanicked = false;
     private FollowerEntity _follower;
+    private string agentName="x";
+    private string agentJob="Nerd";
+    private string agentSpeed="Fast";
+    private string[] names;
+    private string[] jobs;
 
     private bool redLightActive = true;
     // Start is called before the first frame update
@@ -42,7 +49,12 @@ public class BehaviourManager_SCPT : MonoBehaviour
         {
             globalManager = GameObject.Find("GlobalManager").GetComponent<GlobalManager_SCPT>();
         }
-        // calm = 1;
+
+        if (agentUIManager == null)
+        {
+            agentUIManager = GameObject.Find("DetailPanelCanvas").GetComponent<UI_Manager>();
+        }
+
         SetTypeAgent();
        
         calm = Random.Range(calmMin, 100);
@@ -54,7 +66,7 @@ public class BehaviourManager_SCPT : MonoBehaviour
         globalManager.greenLight.AddListener(GreenLight);
         globalManager.redLight.AddListener(RedLight);
         _follower = GetComponent<FollowerEntity>();
-        _follower.maxSpeed += Random.Range(-_speedVariation, _speedVariation);
+        _follower.maxSpeed += rollSpeed;
         Debug.Log($"Setup: ID - {gameObject.GetInstanceID()}, tip - {type}, calm - {calm}, follower gasit: {_follower.isActiveAndEnabled}");
 
         /* Set the calm bar */
@@ -139,6 +151,39 @@ public class BehaviourManager_SCPT : MonoBehaviour
             _calmLossPerSecond = globalManager.calmLossPerTick;
             _calmLossDeath = globalManager.calmLossDeath;
             _speedVariation = globalManager.speedVariation;
+            rollSpeed = Random.Range(-_speedVariation, _speedVariation);
+            agentId = Random.Range(1, 456);
+
+            while( globalManager.ids_used.Contains(agentId) ){
+                agentId = Random.Range(1, 456);
+            }
+
+            globalManager.ids_used.Add(agentId);
+        }
+
+
+        TextAsset textFile = Resources.Load<TextAsset>("first-names");
+        names = textFile.text.Split('\n');
+        if (names.Length > 0)
+        {
+            agentName = names[Random.Range(0, names.Length)];
+        }
+        
+        TextAsset textFileJobs = Resources.Load<TextAsset>("jobs");
+        jobs = textFileJobs.text.Split('\n');
+        if (jobs.Length > 0)
+        {
+            agentJob = jobs[Random.Range(0, jobs.Length)];
+        }
+
+        if( rollSpeed < -_speedVariation / 3  ){
+            agentSpeed = "Slow";
+        }
+        else if( rollSpeed >= -_speedVariation / 3 && rollSpeed < _speedVariation / 3){
+            agentSpeed = "Medium";
+        }
+        else{
+            agentSpeed = "Fast";
         }
 
         typeRoll = Random.value; // returns numbers between {0 - 1}
@@ -190,7 +235,7 @@ public class BehaviourManager_SCPT : MonoBehaviour
     /* When hovering, display the information panel */
     void OnMouseOver()
     {
-        agentUIManager.SetPanelActive("20", "Elena", "WebDev", "Fast", "Protector");
+        agentUIManager.SetPanelActive(agentId, agentName, agentJob, agentSpeed, type);
     }
 
     private void OnMouseExit()
