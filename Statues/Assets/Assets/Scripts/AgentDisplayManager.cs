@@ -8,6 +8,9 @@ public class AgentDisplayManager : MonoBehaviour
     public Slider calmSlider;
     public float maxCalm = 100f;
     public float calm;
+    [SerializeField]Image imageIdent;
+    [SerializeField]public Sprite protectorImage;
+    [SerializeField]public Sprite sabotouerImage;
 
     void Update()
     {
@@ -18,5 +21,23 @@ public class AgentDisplayManager : MonoBehaviour
     public void UpdateCalmBar(float currentCalm)
     {
         calmSlider.value = currentCalm;
+    }
+
+    public void SetAgentTypePhoto(AgentType agentClass)
+    {
+        switch(agentClass) 
+        {
+            case AgentType.Protector:
+                imageIdent.enabled = true;
+                imageIdent.sprite = protectorImage;
+                break;
+            case AgentType.Saboteur:
+                imageIdent.enabled = true;
+                imageIdent.sprite = sabotouerImage;
+                break;
+            case AgentType.Normie: 
+                imageIdent.enabled = false;
+                break;
+        }
     }
 }

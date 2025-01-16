@@ -71,6 +71,10 @@ public class BehaviourManager_SCPT : MonoBehaviour
 
         /* Set the calm bar */
         agentDisplayManager.UpdateCalmBar(calm);
+        agentDisplayManager.SetAgentTypePhoto(type);
+
+        /* Add the agent to the alive agents pool */
+        globalManager.activeAgentsNumber++;
     }
 
     void GreenLight()
@@ -78,6 +82,8 @@ public class BehaviourManager_SCPT : MonoBehaviour
         Debug.Log("GreenLight");
         redLightActive = false;
         _follower.isStopped = false;
+
+        globalManager.calmGlobal = 0;
     }
 
     void RedLight()
@@ -85,11 +91,11 @@ public class BehaviourManager_SCPT : MonoBehaviour
         Debug.Log("RedLight");
         redLightActive = true;
         _follower.isStopped = true;
-    }
-    // Update is called once per frame
-    void Update()
-    {
-        
+
+        if (globalManager.activeAgentsNumber != 0)
+        {
+            globalManager.calmGlobal += calm / globalManager.activeAgentsNumber;
+        }
     }
 
     public int GetCalm(){
@@ -138,6 +144,10 @@ public class BehaviourManager_SCPT : MonoBehaviour
                  break;
             }
         }
+
+        /* Global calm calcultaion */
+        globalManager.calmGlobal += calm/globalManager.activeAgentsNumber;
+
         Debug.Log($"Dupa switch: ID - {gameObject.GetInstanceID()}, tip - {type}, calm - {calm}, calm primit - {value}, tip agent primit - {typeReceiving}, moarte - {isDeathEffect}");
     }
 
@@ -217,6 +227,9 @@ public class BehaviourManager_SCPT : MonoBehaviour
         crowdManager.AgentCrowdEffect( calm, type, true);
         crowdManager.enabled = false;
         this.enabled = false;
+
+        /* Remove the agent from the alive agents pool */
+        globalManager.activeAgentsNumber--;
     }
 
     void FixedUpdate(){
