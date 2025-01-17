@@ -247,9 +247,10 @@ public class BehaviourManager_SCPT : MonoBehaviour
          }
     }
 
-    void Death(){
+    public void Death(){
         crowdManager.AgentCrowdEffect( calm, type, true);
         crowdManager.enabled = false;
+        _follower.isStopped = true;
         this.enabled = false;
 
         /* Remove the agent from the alive agents pool */

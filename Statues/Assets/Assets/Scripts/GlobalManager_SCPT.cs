@@ -59,6 +59,7 @@ public class GlobalManager_SCPT : MonoBehaviour
         if (initialAgentNumberCheck)
         {
             initialAgentsNumber = activeAgentsNumber;
+            initialAgentNumberCheck = false;
         }
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
