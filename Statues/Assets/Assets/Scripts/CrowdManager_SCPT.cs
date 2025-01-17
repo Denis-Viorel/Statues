@@ -30,11 +30,17 @@
             
         }
 
-        public void AgentCrowdEffect( int calm, AgentType typeReceiving, bool isDeathEffect ){
+        public void AgentCrowdEffect( float calm, AgentType typeReceiving, bool isDeathEffect ){
             Debug.Log("Colliders: " + collidersInContact.Count);
             foreach( Collider collision in collidersInContact ){
-                BehaviourManager_SCPT behaviourManager = collision.GetComponentInParent<BehaviourManager_SCPT>();  
-                behaviourManager.ModifyCalm( calm, typeReceiving, isDeathEffect );
+                BehaviourManager_SCPT behaviourManager = collision.transform.GetComponentInParent<BehaviourManager_SCPT>();
+                if (behaviourManager != null)
+                {
+                    behaviourManager.ModifyCalm( calm, typeReceiving, isDeathEffect );
+                } else {
+                    Debug.LogWarning($"Could not find BehaviourManager on or above {collision.gameObject.name}");
+                }
+                
                 }
         }
 

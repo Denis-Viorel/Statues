@@ -20,12 +20,12 @@ public class BehaviourManager_SCPT : MonoBehaviour
     [SerializeField]AgentDisplayManager agentDisplayManager;
     [SerializeField]UI_Manager agentUIManager;
 
-    private int calm;
+    private float calm;
     private int calmMin;
     private int panic;
     private int panicCheck;
-    private int _calmLossPerSecond;
-    private int _calmLossDeath;
+    private float _calmLossPerSecond;
+    private float _calmLossDeath;
     private int agentId;
     private float chanceProtector = 0.10f;
     private float chanceSaboteur = 0.10f;
@@ -61,7 +61,8 @@ public class BehaviourManager_SCPT : MonoBehaviour
         if (crowdManager == null)
         {
             crowdManager = GetComponentInChildren<CrowdManager_SCPT>();
-        }   
+        }
+        
         time = Time.time; 
         globalManager.greenLight.AddListener(GreenLight);
         globalManager.redLight.AddListener(RedLight);
@@ -75,6 +76,10 @@ public class BehaviourManager_SCPT : MonoBehaviour
 
         /* Add the agent to the alive agents pool */
         globalManager.activeAgentsNumber++;
+        if (globalManager.activeAgentsNumber != 0)
+        {
+            globalManager.calmGlobal += calm / globalManager.activeAgentsNumber;
+        }
     }
 
     void GreenLight()
@@ -82,8 +87,6 @@ public class BehaviourManager_SCPT : MonoBehaviour
         Debug.Log("GreenLight");
         redLightActive = false;
         _follower.isStopped = false;
-
-        globalManager.calmGlobal = 0;
     }
 
     void RedLight()
@@ -98,11 +101,11 @@ public class BehaviourManager_SCPT : MonoBehaviour
         }
     }
 
-    public int GetCalm(){
+    public float GetCalm(){
         return calm;
     }
 
-    public void ModifyCalm( int value, AgentType typeReceiving, bool isDeathEffect ){
+    public void ModifyCalm( float value, AgentType typeReceiving, bool isDeathEffect ){
         Debug.Log($"Valori initiale: ID - {gameObject.GetInstanceID()}, tip - {type}, calm - {calm}, calm primit - {value}, tip agent primit - {typeReceiving}, moarte - {isDeathEffect}");
         /*Debug.Log("Valori initiale: " + "calm primit: " + value);
         Debug.Log("Valori initiale: " + "tip agent primit: " + typeReceiving);
@@ -112,21 +115,33 @@ public class BehaviourManager_SCPT : MonoBehaviour
                 if (isDeathEffect)
                 {
                     calm -= _calmLossDeath;
+                    globalManager.calmGlobal -= _calmLossDeath/globalManager.activeAgentsNumber;
                     break;
                 }
-                 if( calm < value && typeReceiving != AgentType.Saboteur )
-                    calm ++;
-                 //Debug.Log("Protector:" + calm );
+
+                if (calm < value && typeReceiving != AgentType.Saboteur)
+                {
+                    calm++;
+                    globalManager.calmGlobal += 1 / globalManager.activeAgentsNumber;
+                }
+
+                //Debug.Log("Protector:" + calm );
                  break;
             }
             case AgentType.Saboteur:{
                 if (isDeathEffect)
                 {
                     calm += _calmLossDeath/2;
+                    globalManager.calmGlobal += (_calmLossDeath/2)/globalManager.activeAgentsNumber;
                     break;
                 }
-                if( calm > value && typeReceiving != AgentType.Protector )
-                        calm--;
+
+                if (calm > value && typeReceiving != AgentType.Protector)
+                {
+                    calm--;
+                    globalManager.calmGlobal -= 1 / globalManager.activeAgentsNumber;
+                }
+
                 //Debug.Log("Saboteur:" + calm );
                 break;
             }
@@ -134,19 +149,28 @@ public class BehaviourManager_SCPT : MonoBehaviour
                 if (isDeathEffect)
                 {
                     calm -= _calmLossDeath;
+                    globalManager.calmGlobal -= _calmLossDeath/globalManager.activeAgentsNumber;
                     break;
                 }
-                if( calm < value )
-                    calm ++;
-                else if( calm > value && typeReceiving != AgentType.Protector )
-                        calm--;
+
+                if (calm < value)
+                {
+                    calm++;
+                    globalManager.calmGlobal += 1 / globalManager.activeAgentsNumber;
+                }
+                else if (calm > value && typeReceiving != AgentType.Protector)
+                {
+                    calm--;
+                    globalManager.calmGlobal -= 1 / globalManager.activeAgentsNumber;
+                }
+
                 //Debug.Log("Normie:" + calm );
                  break;
             }
         }
 
         /* Global calm calcultaion */
-        globalManager.calmGlobal += calm/globalManager.activeAgentsNumber;
+        //globalManager.calmGlobal += calm/globalManager.activeAgentsNumber;
 
         Debug.Log($"Dupa switch: ID - {gameObject.GetInstanceID()}, tip - {type}, calm - {calm}, calm primit - {value}, tip agent primit - {typeReceiving}, moarte - {isDeathEffect}");
     }
@@ -238,6 +262,10 @@ public class BehaviourManager_SCPT : MonoBehaviour
             crowdManager.AgentCrowdEffect( calm, type, false );
             PanicCheck();
             calm -= _calmLossPerSecond;
+            globalManager.calmGlobal -= _calmLossPerSecond/globalManager.activeAgentsNumber;
+            Debug.Log("Calm loss per second: " +_calmLossPerSecond + " Active Agents: " 
+                      + globalManager.activeAgentsNumber + " calm loss calculated: " 
+                      + _calmLossPerSecond/globalManager.activeAgentsNumber);
             Debug.Log($"Red Light Loss: ID - {gameObject.GetInstanceID()}, calm - {calm}");
         }
 

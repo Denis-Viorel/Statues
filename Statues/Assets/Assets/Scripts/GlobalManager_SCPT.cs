@@ -5,6 +5,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class GlobalManager_SCPT : MonoBehaviour
 {
@@ -24,6 +25,8 @@ public class GlobalManager_SCPT : MonoBehaviour
     [SerializeField] public float speedVariation = 1;
     [SerializeField] private AudioSource redLightSound;
     [SerializeField] private AudioSource runningSound;
+    [SerializeField] private TextMeshProUGUI winText;
+    [SerializeField] private GameObject winscreen;
 
     private bool lightSwitch = true; //false = red light, true = green light;
     // Start is called before the first frame update
@@ -32,22 +35,31 @@ public class GlobalManager_SCPT : MonoBehaviour
     public UnityEvent redLight = new UnityEvent();
     public List<int> ids_used = new List<int>();
 
-    public float calmGlobal;
-    public int activeAgentsNumber;
+    public float calmGlobal = 0;
+    public int activeAgentsNumber = 0;
+    private bool initialAgentNumberCheck = true;
+    private int initialAgentsNumber = 0;
 
     [SerializeField] public UI_Manager managerUI;
 
     void Start()
     {
-        calmGlobal = 0;
-        activeAgentsNumber = 0;
-
+        //calmGlobal = 0;
+        //activeAgentsNumber = 0;
+        if (winscreen == null)
+        {
+            winscreen = GameObject.Find("WinscreenOverlay");
+        }
         runningSound.Play();
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (initialAgentNumberCheck)
+        {
+            initialAgentsNumber = activeAgentsNumber;
+        }
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
             LightSwitch();
@@ -70,11 +82,21 @@ public class GlobalManager_SCPT : MonoBehaviour
         else
         {
             /* Stop the doll red light song */
+            calmGlobal = 0;
             redLight.Invoke();
 
             redLightSound.Play();
 
             runningSound.Stop();
         }
+    }
+
+    public void Win(int savedAgents)
+    {
+        Time.timeScale = 0;
+        winscreen.SetActive(true);   
+        winText.text = "Success!" + "\n" + "You've saved " + savedAgents + " out of " + initialAgentsNumber +
+            " agents";
+
     }
 }
