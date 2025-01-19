@@ -28,11 +28,11 @@ public class IntroManager : MonoBehaviour
     {
         if(timer == 51)
         {
-            SceneManager.LoadScene(0);
+            SceneManager.LoadScene(1);
         }
         if(Input.anyKey)
         {
-            SceneManager.LoadScene(0);
+            SceneManager.LoadScene(1);
         }
     }
 }
