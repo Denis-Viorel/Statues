@@ -552,7 +552,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -6769691430286951708, guid: 4bf7653221973074db8f1c9b589ddd36, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -8.45
+      value: 7.03
       objectReference: {fileID: 0}
     - target: {fileID: -6769691430286951708, guid: 4bf7653221973074db8f1c9b589ddd36, type: 3}
       propertyPath: m_LocalPosition.y
@@ -560,7 +560,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -6769691430286951708, guid: 4bf7653221973074db8f1c9b589ddd36, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 43.18
+      value: 43.78
       objectReference: {fileID: 0}
     - target: {fileID: -6769691430286951708, guid: 4bf7653221973074db8f1c9b589ddd36, type: 3}
       propertyPath: m_LocalRotation.w
@@ -918,6 +918,9 @@ MonoBehaviour:
   globalManager: {fileID: 0}
   agentDisplayManager: {fileID: 4474394478410063614}
   agentUIManager: {fileID: 0}
+  cap: {fileID: 5648104835216645849}
+  rb: {fileID: 1996707368606125956}
+  _follower: {fileID: 9084471372955196357}
 --- !u!136 &5648104835216645849
 CapsuleCollider:
   m_ObjectHideFlags: 0

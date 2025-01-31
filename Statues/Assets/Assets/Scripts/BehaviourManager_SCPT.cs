@@ -19,7 +19,9 @@ public class BehaviourManager_SCPT : MonoBehaviour
     [SerializeField]GlobalManager_SCPT globalManager;
     [SerializeField]AgentDisplayManager agentDisplayManager;
     [SerializeField]UI_Manager agentUIManager;
-
+    [SerializeField] private CapsuleCollider cap;
+    [SerializeField] private Rigidbody rb;
+    [SerializeField] private FollowerEntity _follower;
     private float calm;
     private int calmMin;
     private int panic;
@@ -34,12 +36,13 @@ public class BehaviourManager_SCPT : MonoBehaviour
     private float _speedVariation;
     private float rollSpeed;
     private bool isPanicked = false;
-    private FollowerEntity _follower;
+   
     private string agentName="x";
     private string agentJob="Nerd";
     private string agentSpeed="Fast";
     private string[] names;
     private string[] jobs;
+    //private SphereCollider crowdCheck;
 
     private bool redLightActive = true;
     // Start is called before the first frame update
@@ -53,6 +56,16 @@ public class BehaviourManager_SCPT : MonoBehaviour
         if (agentUIManager == null)
         {
             agentUIManager = GameObject.Find("DetailPanelCanvas").GetComponent<UI_Manager>();
+        }
+
+        if (cap == null)
+        {
+            cap = GetComponent<CapsuleCollider>();
+        }
+
+        if (rb == null)
+        {
+            rb = GetComponent<Rigidbody>();
         }
 
         SetTypeAgent();
@@ -84,14 +97,14 @@ public class BehaviourManager_SCPT : MonoBehaviour
 
     void GreenLight()
     {
-        Debug.Log("GreenLight");
+        //Debug.Log("GreenLight");
         redLightActive = false;
         _follower.isStopped = false;
     }
 
     void RedLight()
     {
-        Debug.Log("RedLight");
+        //Debug.Log("RedLight");
         redLightActive = true;
         _follower.isStopped = true;
 
@@ -250,7 +263,11 @@ public class BehaviourManager_SCPT : MonoBehaviour
     public void Death(){
         crowdManager.AgentCrowdEffect( calm, type, true);
         crowdManager.enabled = false;
-        _follower.isStopped = true;
+        globalManager.greenLight.RemoveListener(GreenLight);
+        globalManager.redLight.RemoveListener(RedLight);
+        _follower.enabled = false;
+        cap.enabled = false;
+        rb.isKinematic = true;
         this.enabled = false;
 
         /* Remove the agent from the alive agents pool */

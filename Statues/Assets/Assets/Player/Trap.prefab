@@ -55,8 +55,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1.9813914, y: 2.4869719, z: 1.5299911}
-  m_Center: {x: -1.4580677, y: -2.3038192, z: -0.75178146}
+  m_Size: {x: 1.124948, y: 2.7536473, z: 0.8247223}
+  m_Center: {x: -1.4093835, y: -2.1704814, z: -0.72740555}
 --- !u!114 &7654241171493880385
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -69,6 +69,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b958b3e01eab5437a9a6b6d87f042889, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  audioSource: {fileID: 0}
+  animator: {fileID: 7091014348377731329}
+  col: {fileID: 4766673968246344040}
 --- !u!82 &3647367283755378002
 AudioSource:
   m_ObjectHideFlags: 0
@@ -90,7 +93,7 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 500
+  MaxDistance: 290822.25
   Pan2D: 0
   rolloffMode: 0
   BypassEffects: 0
@@ -215,6 +218,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1152670490326467447}
     m_Modifications:
+    - target: {fileID: -5644133064174452605, guid: 208e05ecb45f5e742840b8eb8baa9c39, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: f3f3c959b399f4799aba08caede870d0, type: 2}
     - target: {fileID: 8128668236925612103, guid: 208e05ecb45f5e742840b8eb8baa9c39, type: 3}
       propertyPath: m_Name
       value: wolftrap
@@ -267,5 +274,10 @@ PrefabInstance:
 --- !u!4 &2935368654148639052 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8897093224900880590, guid: 208e05ecb45f5e742840b8eb8baa9c39, type: 3}
+  m_PrefabInstance: {fileID: 6036042975716897154}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &7091014348377731329 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: -5644133064174452605, guid: 208e05ecb45f5e742840b8eb8baa9c39, type: 3}
   m_PrefabInstance: {fileID: 6036042975716897154}
   m_PrefabAsset: {fileID: 0}
