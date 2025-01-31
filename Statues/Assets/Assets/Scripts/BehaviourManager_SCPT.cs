@@ -106,7 +106,7 @@ public class BehaviourManager_SCPT : MonoBehaviour
     }
 
     public void ModifyCalm( float value, AgentType typeReceiving, bool isDeathEffect ){
-        Debug.Log($"Valori initiale: ID - {gameObject.GetInstanceID()}, tip - {type}, calm - {calm}, calm primit - {value}, tip agent primit - {typeReceiving}, moarte - {isDeathEffect}");
+        // Debug.Log($"Valori initiale: ID - {gameObject.GetInstanceID()}, tip - {type}, calm - {calm}, calm primit - {value}, tip agent primit - {typeReceiving}, moarte - {isDeathEffect}");
         /*Debug.Log("Valori initiale: " + "calm primit: " + value);
         Debug.Log("Valori initiale: " + "tip agent primit: " + typeReceiving);
         Debug.Log("Valori initiale: " + "calm: " + calm);*/
@@ -172,7 +172,7 @@ public class BehaviourManager_SCPT : MonoBehaviour
         /* Global calm calcultaion */
         //globalManager.calmGlobal += calm/globalManager.activeAgentsNumber;
 
-        Debug.Log($"Dupa switch: ID - {gameObject.GetInstanceID()}, tip - {type}, calm - {calm}, calm primit - {value}, tip agent primit - {typeReceiving}, moarte - {isDeathEffect}");
+        // Debug.Log($"Dupa switch: ID - {gameObject.GetInstanceID()}, tip - {type}, calm - {calm}, calm primit - {value}, tip agent primit - {typeReceiving}, moarte - {isDeathEffect}");
     }
 
     void SetTypeAgent(){
@@ -264,10 +264,10 @@ public class BehaviourManager_SCPT : MonoBehaviour
             PanicCheck();
             calm -= _calmLossPerSecond;
             globalManager.calmGlobal -= _calmLossPerSecond/globalManager.activeAgentsNumber;
-            Debug.Log("Calm loss per second: " +_calmLossPerSecond + " Active Agents: " 
-                      + globalManager.activeAgentsNumber + " calm loss calculated: " 
-                      + _calmLossPerSecond/globalManager.activeAgentsNumber);
-            Debug.Log($"Red Light Loss: ID - {gameObject.GetInstanceID()}, calm - {calm}");
+            // Debug.Log("Calm loss per second: " +_calmLossPerSecond + " Active Agents: " 
+            //           + globalManager.activeAgentsNumber + " calm loss calculated: " 
+            //           + _calmLossPerSecond/globalManager.activeAgentsNumber);
+            // Debug.Log($"Red Light Loss: ID - {gameObject.GetInstanceID()}, calm - {calm}");
         }
 
         /* Update calm bar */

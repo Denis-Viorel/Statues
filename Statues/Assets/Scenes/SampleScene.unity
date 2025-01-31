@@ -3552,34 +3552,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1152670490326467447, guid: 7d28357289b094ed0aac088b9b31509a, type: 3}
-      propertyPath: m_ConstrainProportionsScale
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2935368654148639052, guid: 7d28357289b094ed0aac088b9b31509a, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -1.4
-      objectReference: {fileID: 0}
-    - target: {fileID: 2935368654148639052, guid: 7d28357289b094ed0aac088b9b31509a, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -3.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 4766673968246344040, guid: 7d28357289b094ed0aac088b9b31509a, type: 3}
-      propertyPath: m_Size.x
-      value: 1.9813914
-      objectReference: {fileID: 0}
-    - target: {fileID: 4766673968246344040, guid: 7d28357289b094ed0aac088b9b31509a, type: 3}
-      propertyPath: m_Size.z
-      value: 1.5299911
-      objectReference: {fileID: 0}
-    - target: {fileID: 4766673968246344040, guid: 7d28357289b094ed0aac088b9b31509a, type: 3}
-      propertyPath: m_Center.x
-      value: -1.4580677
-      objectReference: {fileID: 0}
-    - target: {fileID: 4766673968246344040, guid: 7d28357289b094ed0aac088b9b31509a, type: 3}
-      propertyPath: m_Center.z
-      value: -0.75178146
-      objectReference: {fileID: 0}
     - target: {fileID: 8697172711659955312, guid: 7d28357289b094ed0aac088b9b31509a, type: 3}
       propertyPath: m_Name
       value: Trap

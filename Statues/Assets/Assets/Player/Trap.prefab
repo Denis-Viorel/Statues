@@ -31,7 +31,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 1.1, y: -2.22, z: 28.25}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 2935368654148639052}
   m_Father: {fileID: 0}
@@ -55,8 +55,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 3.7081246, y: 2.4869719, z: 5.360257}
-  m_Center: {x: -1.3540623, y: -2.3038192, z: -2.1801286}
+  m_Size: {x: 1.9813914, y: 2.4869719, z: 1.5299911}
+  m_Center: {x: -1.4580677, y: -2.3038192, z: -0.75178146}
 --- !u!114 &7654241171493880385
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -80,7 +80,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 1a1b7afa57394fa43b918698bfa5f5af, type: 3}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
@@ -221,11 +221,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8897093224900880590, guid: 208e05ecb45f5e742840b8eb8baa9c39, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -2.07
+      value: -1.4
       objectReference: {fileID: 0}
     - target: {fileID: 8897093224900880590, guid: 208e05ecb45f5e742840b8eb8baa9c39, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.92
+      value: -3.5
       objectReference: {fileID: 0}
     - target: {fileID: 8897093224900880590, guid: 208e05ecb45f5e742840b8eb8baa9c39, type: 3}
       propertyPath: m_LocalPosition.z
