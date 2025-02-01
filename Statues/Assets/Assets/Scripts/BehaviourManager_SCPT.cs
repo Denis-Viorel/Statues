@@ -10,15 +10,25 @@ public enum AgentType{
         Protector,
         Saboteur,
         Normie
-    }
+}
+
+public enum AgentStatus{
+    Idle,
+    Walking,
+    Running,
+    Victory,
+    Dead
+}
 
 public class BehaviourManager_SCPT : MonoBehaviour
 {
     AgentType type = new AgentType();
+    AgentStatus agentStatus = AgentStatus.Idle;
     [SerializeField]CrowdManager_SCPT crowdManager;
     [SerializeField]GlobalManager_SCPT globalManager;
     [SerializeField]AgentDisplayManager agentDisplayManager;
     [SerializeField]UI_Manager agentUIManager;
+    [SerializeField]AnimationManager agentAnimationManager;
     [SerializeField] private CapsuleCollider cap;
     [SerializeField] private Rigidbody rb;
     [SerializeField] private FollowerEntity _follower;
@@ -93,6 +103,21 @@ public class BehaviourManager_SCPT : MonoBehaviour
         {
             globalManager.calmGlobal += calm / globalManager.activeAgentsNumber;
         }
+
+        /* Set the agent to moving status -> Stops the move animation */
+        switch(agentSpeed)
+        {
+            case "Fast":
+                agentStatus = AgentStatus.Running;
+                break;
+            case "Medium":
+            case "Slow":
+            default:
+                agentStatus = AgentStatus.Walking;
+                break;
+        }
+
+        agentAnimationManager.UpdateAnimationState(agentStatus);
     }
 
     void GreenLight()
@@ -100,6 +125,21 @@ public class BehaviourManager_SCPT : MonoBehaviour
         //Debug.Log("GreenLight");
         redLightActive = false;
         _follower.isStopped = false;
+
+        /* Set the agent to moving status -> Stops the move animation */
+        switch(agentSpeed)
+        {
+            case "Fast":
+                agentStatus = AgentStatus.Running;
+                break;
+            case "Medium":
+            case "Slow":
+            default:
+                agentStatus = AgentStatus.Walking;
+                break;
+        }
+
+        agentAnimationManager.UpdateAnimationState(agentStatus);
     }
 
     void RedLight()
@@ -112,6 +152,10 @@ public class BehaviourManager_SCPT : MonoBehaviour
         {
             globalManager.calmGlobal += calm / globalManager.activeAgentsNumber;
         }
+
+        /* Set the agent to idle status -> Stops the move animation */
+        agentStatus = AgentStatus.Idle;
+        agentAnimationManager.UpdateAnimationState(agentStatus);
     }
 
     public float GetCalm(){
@@ -272,6 +316,25 @@ public class BehaviourManager_SCPT : MonoBehaviour
 
         /* Remove the agent from the alive agents pool */
         globalManager.activeAgentsNumber--;
+
+        /* Play death animation */
+        agentStatus = AgentStatus.Dead;
+        agentAnimationManager.UpdateAnimationState(agentStatus);
+    }
+
+    public void Victory()
+    {
+        /* Play victory animation */
+        agentStatus = AgentStatus.Victory;
+        agentAnimationManager.UpdateAnimationState(agentStatus);
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "Finish")
+        {
+            Victory();
+        }
     }
 
     void FixedUpdate(){

@@ -29,8 +29,16 @@ public class Finish : MonoBehaviour
             Debug.Log("agentsNumber" + agentsNumber + " finished " + finishedAgentsNumber);
             if (finishedAgentsNumber == agentsNumber)
             {
-                globalManager.Win(finishedAgentsNumber);
+                StartCoroutine(Delay(5.0f));
             }
         }
+    }
+
+    IEnumerator Delay(float delayTime)
+    {
+        //Wait for the specified delay time before continuing.
+        yield return new WaitForSeconds(delayTime);
+        globalManager.Win(finishedAgentsNumber);
+        //Do the action after the delay time has finished.
     }
 }
