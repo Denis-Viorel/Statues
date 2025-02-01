@@ -41,6 +41,7 @@ public class GlobalManager_SCPT : MonoBehaviour
     private int initialAgentsNumber = 0;
 
     [SerializeField] public UI_Manager managerUI;
+    [SerializeField] private DesaturateImageEffect desaturate;
 
     void Start()
     {
@@ -66,6 +67,9 @@ public class GlobalManager_SCPT : MonoBehaviour
             LightSwitch();
         }
         managerUI.UpdateCalmBar(calmGlobal);
+
+        /* Apply the screen desaturation */
+        desaturate.desaturateAmount = 1 - calmGlobal/100;
     }
 
     void LightSwitch()
