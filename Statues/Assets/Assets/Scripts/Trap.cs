@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using NUnit.Framework;
 using UnityEngine;
 
 public class Trap : MonoBehaviour
@@ -8,6 +9,8 @@ public class Trap : MonoBehaviour
     [SerializeField] private AudioSource audioSource;
     [SerializeField] private Animator animator;
     [SerializeField] private BoxCollider col;
+    public enum trapType { wolf, spikes };
+    [SerializeField]  private trapType selectedTrap;
     // Start is called before the first frame update
     void Start()
     {
@@ -39,7 +42,10 @@ public class Trap : MonoBehaviour
             audioSource.Play();
             animator.SetTrigger("Entered");
             Debug.Log("Trap entered" + animator.gameObject.name);
-            col.enabled = false;
+
+            if( selectedTrap == trapType.wolf ){
+                col.enabled = false;
+            }
         }
     }
 }
