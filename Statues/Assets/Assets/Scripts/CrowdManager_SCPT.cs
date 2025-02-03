@@ -23,7 +23,7 @@
         {
             Debug.Log("Hit!");
             Collider otherCollider = collision.GetComponent<Collider>();
-            if (!collidersInContact.Contains(otherCollider))
+            if (!collidersInContact.Contains(otherCollider) && otherCollider.gameObject.tag.Equals("Player"))
             {
                 collidersInContact.Add(otherCollider);
             }
