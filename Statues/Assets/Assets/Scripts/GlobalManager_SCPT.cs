@@ -6,6 +6,9 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 using TMPro;
+using static UnityEngine.EventSystems.EventTrigger;
+using System.Runtime.CompilerServices;
+using UnityEngine.SocialPlatforms.Impl;
 
 public class GlobalManager_SCPT : MonoBehaviour
 {
@@ -28,6 +31,16 @@ public class GlobalManager_SCPT : MonoBehaviour
     [SerializeField] private TextMeshProUGUI winText;
     [SerializeField] private GameObject winscreen;
 
+    /* Endless run variables */
+    [SerializeField] private TextMeshProUGUI timerUI;
+    [SerializeField] private TextMeshProUGUI roundNoUI;
+    [SerializeField] private TextMeshProUGUI survivingAgentsUI;
+    [SerializeField] private GameObject circle;
+    [SerializeField] private int timeBetweenRounds;
+    [SerializeField] private Vector3 restartPlayerPosition;
+    private int round;
+    private int score;
+
     private bool lightSwitch = true; //false = red light, true = green light;
     // Start is called before the first frame update
 
@@ -47,10 +60,24 @@ public class GlobalManager_SCPT : MonoBehaviour
     {
         //calmGlobal = 0;
         //activeAgentsNumber = 0;
+
+        timeBetweenRounds = 10;
+
         if (winscreen == null)
         {
             winscreen = GameObject.Find("WinscreenOverlay");
         }
+
+        if(circle == null)
+        {
+            circle = GameObject.Find("Circle");
+        }
+        circle.SetActive(false);
+
+        restartPlayerPosition = new Vector3(-11.0f, -6.31f, 49.0f);
+        round = 0;
+        score = 0;
+
         runningSound.Play();
     }
 
@@ -96,12 +123,90 @@ public class GlobalManager_SCPT : MonoBehaviour
         }
     }
 
-    public void Win(int savedAgents)
+    void GameOver()
+    {
+        circle.SetActive(true);
+        roundNoUI.text = "You lost!";
+        timerUI.text = score.ToString();
+
+        HighscoreManager.SaveHighScore(score);
+
+        StartCoroutine(Delay(5f));
+    }
+
+    IEnumerator Delay(float delayTime)
+    {
+        //Wait for the specified delay time before continuing.
+        yield return new WaitForSeconds(delayTime);
+        SceneManager.LoadScene("MainMenu");
+        //Do the action after the delay time has finished.
+    }
+
+    public void WinRound(int savedAgents)
     {
         Time.timeScale = 0;
-        winscreen.SetActive(true);   
-        winText.text = "Success!" + "\n" + "You've saved " + savedAgents + " out of " + initialAgentsNumber +
-            " agents";
+        round++;
+        score = score + round * savedAgents;
 
+        /* Display round info and timer */
+        StartCoroutine(Countdown(timeBetweenRounds, savedAgents));
+    }
+
+    private IEnumerator Countdown(int timeRemaining, int savedAgents)
+    {
+        circle.SetActive(true);
+        roundNoUI.text = "Round No. " + round.ToString();
+        survivingAgentsUI.text = "You saved " + savedAgents.ToString() + "/" + initialAgentsNumber.ToString() + " players";
+
+        while (timeRemaining >= 0)
+        {
+            yield return new WaitForSecondsRealtime(1f); // Wait 1 second
+            timerUI.text = timeRemaining.ToString();
+            timeRemaining--;
+        }
+
+        circle.SetActive(false);
+
+        ResetAgents();
+
+        yield return new WaitForSecondsRealtime(3f);
+
+        Time.timeScale = 1;
+    }
+
+    private void ResetAgents()
+    {
+        int aliveAgentCol = 0;
+        int aliveAgentRow = 0;
+        Vector3 localRestartPlayerPosition;
+
+        /* Restart for the next round */
+        GameObject[] allPlayer = GameObject.FindGameObjectsWithTag("Player");
+        foreach (GameObject player in allPlayer)
+        {
+            BehaviourManager_SCPT playerBehaviour = player.GetComponent<BehaviourManager_SCPT>();
+
+            if (playerBehaviour.agentStatus != AgentStatus.Dead)
+            {
+                localRestartPlayerPosition = restartPlayerPosition + new Vector3(2 * aliveAgentCol, 0, -2 * aliveAgentRow);
+                player.transform.position = localRestartPlayerPosition;
+                aliveAgentCol++;
+
+                if (aliveAgentCol == 12)
+                {
+                    aliveAgentCol = 0;
+                    aliveAgentRow++;
+                }
+            }
+        }
+        aliveAgentRow = 0;
+    }
+
+    public void checkAllAgentsDead()
+    {
+        if(activeAgentsNumber == 0)
+        {
+            GameOver();
+        }
     }
 }

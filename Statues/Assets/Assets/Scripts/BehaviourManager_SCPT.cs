@@ -23,7 +23,7 @@ public enum AgentStatus{
 public class BehaviourManager_SCPT : MonoBehaviour
 {
     AgentType type = new AgentType();
-    AgentStatus agentStatus = AgentStatus.Idle;
+    public AgentStatus agentStatus = AgentStatus.Idle;
     [SerializeField]CrowdManager_SCPT crowdManager;
     [SerializeField]GlobalManager_SCPT globalManager;
     [SerializeField]AgentDisplayManager agentDisplayManager;
@@ -316,6 +316,7 @@ public class BehaviourManager_SCPT : MonoBehaviour
 
         /* Remove the agent from the alive agents pool */
         globalManager.activeAgentsNumber--;
+        globalManager.checkAllAgentsDead();
 
         /* Play death animation */
         agentStatus = AgentStatus.Dead;

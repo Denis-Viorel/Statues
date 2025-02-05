@@ -38,7 +38,8 @@ public class Finish : MonoBehaviour
     {
         //Wait for the specified delay time before continuing.
         yield return new WaitForSeconds(delayTime);
-        globalManager.Win(finishedAgentsNumber);
+        globalManager.WinRound(finishedAgentsNumber);
+        finishedAgentsNumber = 0;
         //Do the action after the delay time has finished.
     }
 }
