@@ -108,7 +108,7 @@ public class BehaviourManager_SCPT : MonoBehaviour
         globalManager.activeAgentsNumber++;
         if (globalManager.activeAgentsNumber != 0)
         {
-            globalManager.calmGlobal += calm / globalManager.activeAgentsNumber;
+            globalManager.initialCalmGlobal += calm;
         }
 
         /* Set the agent to moving status -> Stops the move animation */
