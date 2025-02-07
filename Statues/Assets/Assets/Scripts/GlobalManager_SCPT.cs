@@ -49,6 +49,7 @@ public class GlobalManager_SCPT : MonoBehaviour
     public List<int> ids_used = new List<int>();
 
     public float calmGlobal = 0;
+    public float initialCalmGlobal = 0;
     public int activeAgentsNumber = 0;
     private bool initialAgentNumberCheck = true;
     public int initialAgentsNumber = 0;
@@ -88,6 +89,7 @@ public class GlobalManager_SCPT : MonoBehaviour
         {
             initialAgentsNumber = activeAgentsNumber;
             initialAgentNumberCheck = false;
+            calmGlobal = initialCalmGlobal / initialAgentsNumber;
         }
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
