@@ -157,10 +157,10 @@ public class BehaviourManager_SCPT : MonoBehaviour
         redLightActive = true;
         _follower.isStopped = true;
 
-        if (globalManager.activeAgentsNumber != 0)
+        /*if (globalManager.activeAgentsNumber != 0)
         {
             globalManager.calmGlobal += calm / globalManager.activeAgentsNumber;
-        }
+        }*/
 
         /* Set the agent to idle status -> Stops the move animation */
         agentStatus = AgentStatus.Idle;
@@ -188,7 +188,7 @@ public class BehaviourManager_SCPT : MonoBehaviour
                 if (calm < value && typeReceiving != AgentType.Saboteur)
                 {
                     calm++;
-                    globalManager.calmGlobal += 1 / globalManager.activeAgentsNumber;
+                    globalManager.calmGlobal += 1 / globalManager.initialAgentsNumber;
                 }
 
                 //Debug.Log("Protector:" + calm );
@@ -198,14 +198,14 @@ public class BehaviourManager_SCPT : MonoBehaviour
                 if (isDeathEffect)
                 {
                     calm += _calmLossDeath/2;
-                    globalManager.calmGlobal += (_calmLossDeath/2)/globalManager.activeAgentsNumber;
+                    globalManager.calmGlobal += (_calmLossDeath/2)/globalManager.initialAgentsNumber;
                     break;
                 }
 
                 if (calm > value && typeReceiving != AgentType.Protector)
                 {
                     calm--;
-                    globalManager.calmGlobal -= 1 / globalManager.activeAgentsNumber;
+                    globalManager.calmGlobal -= 1 / globalManager.initialAgentsNumber;
                 }
 
                 //Debug.Log("Saboteur:" + calm );
@@ -215,19 +215,19 @@ public class BehaviourManager_SCPT : MonoBehaviour
                 if (isDeathEffect)
                 {
                     calm -= _calmLossDeath;
-                    globalManager.calmGlobal -= _calmLossDeath/globalManager.activeAgentsNumber;
+                    globalManager.calmGlobal -= _calmLossDeath/globalManager.initialAgentsNumber;
                     break;
                 }
 
                 if (calm < value)
                 {
                     calm++;
-                    globalManager.calmGlobal += 1 / globalManager.activeAgentsNumber;
+                    globalManager.calmGlobal += 1 / globalManager.initialAgentsNumber;
                 }
                 else if (calm > value && typeReceiving != AgentType.Protector)
                 {
                     calm--;
-                    globalManager.calmGlobal -= 1 / globalManager.activeAgentsNumber;
+                    globalManager.calmGlobal -= 1 / globalManager.initialAgentsNumber;
                 }
 
                 //Debug.Log("Normie:" + calm );
@@ -315,7 +315,7 @@ public class BehaviourManager_SCPT : MonoBehaviour
 
     public void Death(){
         crowdManager.AgentCrowdEffect( calm, type, true);
-        globalManager.calmGlobal -= calm/globalManager.activeAgentsNumber;
+        globalManager.calmGlobal -= calm/globalManager.initialAgentsNumber;
         calm = 0;
         agentDisplayManager.UpdateCalmBar(calm);
         crowdManager.enabled = false;
@@ -356,10 +356,10 @@ public class BehaviourManager_SCPT : MonoBehaviour
             crowdManager.AgentCrowdEffect( calm, type, false );
             PanicCheck();
             calm -= _calmLossPerSecond;
-            globalManager.calmGlobal -= _calmLossPerSecond/globalManager.activeAgentsNumber;
+            globalManager.calmGlobal -= _calmLossPerSecond/globalManager.initialAgentsNumber;
             Debug.Log("Calm loss per second: " +_calmLossPerSecond + " Active Agents: " 
-                      + globalManager.activeAgentsNumber + " calm loss calculated: " 
-                      + _calmLossPerSecond/globalManager.activeAgentsNumber);
+                      + globalManager.initialAgentsNumber + " calm loss calculated: " 
+                      + _calmLossPerSecond/globalManager.initialAgentsNumber);
             Debug.Log($"Red Light Loss: ID - {gameObject.GetInstanceID()}, calm - {calm}");
         }
 

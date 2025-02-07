@@ -51,7 +51,7 @@ public class GlobalManager_SCPT : MonoBehaviour
     public float calmGlobal = 0;
     public int activeAgentsNumber = 0;
     private bool initialAgentNumberCheck = true;
-    private int initialAgentsNumber = 0;
+    public int initialAgentsNumber = 0;
 
     [SerializeField] public UI_Manager managerUI;
     [SerializeField] private DesaturateImageEffect desaturate;
@@ -114,7 +114,7 @@ public class GlobalManager_SCPT : MonoBehaviour
         else
         {
             /* Stop the doll red light song */
-            calmGlobal = 0;
+            //calmGlobal = 0;
             redLight.Invoke();
 
             redLightSound.Play();
