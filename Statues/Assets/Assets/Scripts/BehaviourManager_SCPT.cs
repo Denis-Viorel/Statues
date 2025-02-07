@@ -56,7 +56,7 @@ public class BehaviourManager_SCPT : MonoBehaviour
     private Finish _finish;
     //private SphereCollider crowdCheck;
 
-    private bool redLightActive = true;
+    private bool redLightActive = false;
     // Start is called before the first frame update
     void Start()
     {
