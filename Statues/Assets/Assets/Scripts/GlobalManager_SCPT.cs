@@ -87,7 +87,7 @@ public class GlobalManager_SCPT : MonoBehaviour
         else
         {
             /* Stop the doll red light song */
-            calmGlobal = 0;
+            //calmGlobal = 0;
             redLight.Invoke();
 
             redLightSound.Play();

@@ -157,10 +157,10 @@ public class BehaviourManager_SCPT : MonoBehaviour
         redLightActive = true;
         _follower.isStopped = true;
 
-        if (globalManager.activeAgentsNumber != 0)
+        /*if (globalManager.activeAgentsNumber != 0)
         {
             globalManager.calmGlobal += calm / globalManager.activeAgentsNumber;
-        }
+        }*/
 
         /* Set the agent to idle status -> Stops the move animation */
         agentStatus = AgentStatus.Idle;
