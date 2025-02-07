@@ -317,6 +317,7 @@ public class BehaviourManager_SCPT : MonoBehaviour
         crowdManager.AgentCrowdEffect( calm, type, true);
         globalManager.calmGlobal -= calm/globalManager.activeAgentsNumber;
         calm = 0;
+        agentDisplayManager.UpdateCalmBar(calm);
         crowdManager.enabled = false;
         globalManager.greenLight.RemoveListener(GreenLight);
         globalManager.redLight.RemoveListener(RedLight);
