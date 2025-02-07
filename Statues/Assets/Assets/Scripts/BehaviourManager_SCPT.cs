@@ -46,12 +46,14 @@ public class BehaviourManager_SCPT : MonoBehaviour
     private float _speedVariation;
     private float rollSpeed;
     private bool isPanicked = false;
-   
+    private Vector3 _destination;
     private string agentName="x";
     private string agentJob="Nerd";
     private string agentSpeed="Fast";
     private string[] names;
     private string[] jobs;
+
+    private Finish _finish;
     //private SphereCollider crowdCheck;
 
     private bool redLightActive = true;
@@ -76,6 +78,11 @@ public class BehaviourManager_SCPT : MonoBehaviour
         if (rb == null)
         {
             rb = GetComponent<Rigidbody>();
+        }
+        
+        if (_finish == null)
+        {
+            _finish = GameObject.Find("Finish").GetComponent<Finish>();
         }
 
         SetTypeAgent();
@@ -117,6 +124,8 @@ public class BehaviourManager_SCPT : MonoBehaviour
                 break;
         }
 
+        _destination = new Vector3(0f, -6.31f, 11f);
+        StartCoroutine(SetDestination());
         agentAnimationManager.UpdateAnimationState(agentStatus);
     }
 
@@ -363,5 +372,17 @@ public class BehaviourManager_SCPT : MonoBehaviour
     private void OnMouseExit()
     {
         agentUIManager.SetPanelInactive();
+    }
+
+    IEnumerator SetDestination()
+    {
+        _destination.x = transform.position.x;
+        _follower.destination = _destination;
+        while (!_follower.reachedDestination)
+        {
+            yield return new WaitForSeconds(0.5f);
+        }
+
+        _finish.AgentFinished();
     }
 }
