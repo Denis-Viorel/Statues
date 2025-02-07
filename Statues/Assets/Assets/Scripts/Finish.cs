@@ -19,8 +19,8 @@ public class Finish : MonoBehaviour
     {
         
     }
-
-    void OnTriggerEnter(Collider other)
+    //TODO: remove collider, AgentFinished should handle it, move this logic to Global, delete Finish object
+    /*void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Player")
         {
@@ -31,6 +31,17 @@ public class Finish : MonoBehaviour
             {
                 StartCoroutine(Delay(5.0f));
             }
+        }
+    }*/
+
+    public void AgentFinished()
+    {
+        agentsNumber = globalManager.activeAgentsNumber;
+        finishedAgentsNumber++;
+        Debug.Log("agentsNumber" + agentsNumber + " finished " + finishedAgentsNumber);
+        if (finishedAgentsNumber == agentsNumber)
+        {
+            StartCoroutine(Delay(5.0f));
         }
     }
 

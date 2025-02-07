@@ -884,9 +884,6 @@ PrefabInstance:
       addedObject: {fileID: 5648104835216645849}
     - targetCorrespondingSourceObject: {fileID: 6635245195314443262, guid: 4bf7653221973074db8f1c9b589ddd36, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 4077096455215787665}
-    - targetCorrespondingSourceObject: {fileID: 6635245195314443262, guid: 4bf7653221973074db8f1c9b589ddd36, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 9084471372955196357}
     - targetCorrespondingSourceObject: {fileID: 6635245195314443262, guid: 4bf7653221973074db8f1c9b589ddd36, type: 3}
       insertIndex: -1
@@ -918,6 +915,7 @@ MonoBehaviour:
   globalManager: {fileID: 0}
   agentDisplayManager: {fileID: 4474394478410063614}
   agentUIManager: {fileID: 0}
+  agentAnimationManager: {fileID: 0}
   cap: {fileID: 5648104835216645849}
   rb: {fileID: 1996707368606125956}
   _follower: {fileID: 9084471372955196357}
@@ -944,21 +942,6 @@ CapsuleCollider:
   m_Height: 1.7
   m_Direction: 1
   m_Center: {x: 0, y: 0.83299387, z: 0.050313026}
---- !u!114 &4077096455215787665
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7969063813969921467}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c9679e68a0f1144e79c664d9a11ca121, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  version: 1073741824
-  target: {fileID: 0}
-  useRotation: 0
 --- !u!114 &9084471372955196357
 MonoBehaviour:
   m_ObjectHideFlags: 0
