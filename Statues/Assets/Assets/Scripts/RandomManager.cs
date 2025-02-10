@@ -12,7 +12,7 @@ public class RandomManager : MonoBehaviour
     [SerializeField] private GameObject wolfTrap;
     [SerializeField] private GameObject spikeTrap;
 
-    [SerializeField] private int nrTraps = 5;
+    [SerializeField] private int nrTraps = 1;
 
     private List<Vector2> placedTraps = new List<Vector2>();
 
@@ -26,7 +26,9 @@ public class RandomManager : MonoBehaviour
     private List<Vector2> placedAgents = new List<Vector2>();
 
     [SerializeField] private int nrAgents = 20;
-    
+
+    private List<GameObject> spawnedTraps = new List<GameObject>();
+
     // Start is called before the first frame update
     void Start()
     {
@@ -39,8 +41,16 @@ public class RandomManager : MonoBehaviour
     {
         
     }
-    void SettingTraps(){
-        for( int i=1; i<=nrTraps; i++ )
+    public void SettingTraps()
+    {
+        foreach(GameObject trap in spawnedTraps)
+        {
+            Destroy(trap);
+        }
+        spawnedTraps.Clear();
+        placedTraps.Clear();
+
+        for ( int i=1; i<=nrTraps; i++ )
         {
             Vector2 randomPosition;
             bool validPosition;
@@ -48,7 +58,7 @@ public class RandomManager : MonoBehaviour
             int attempts = 0;
 
             do 
-           {
+            {
                 randomPosition = new Vector2(Random.Range(minx, maxx), Random.Range(minz, maxz));
 
                 validPosition = true;
@@ -71,10 +81,9 @@ public class RandomManager : MonoBehaviour
             if (validPosition){
                 Vector3 spawnPosition = new Vector3(randomPosition.x, y, randomPosition.y);
                 GameObject selectedPrefab = (Random.value > 0.5f) ? spikeTrap : wolfTrap;
-                Instantiate(selectedPrefab, spawnPosition, Quaternion.identity);
+                spawnedTraps.Add(Instantiate(selectedPrefab, spawnPosition, Quaternion.identity));
                 placedTraps.Add(randomPosition);
             }
-            
         }
     }
 
@@ -115,5 +124,10 @@ public class RandomManager : MonoBehaviour
             }
             
         }
+    }
+
+    public void setNrTraps(int nrTraps)
+    {
+        this.nrTraps = nrTraps;
     }
 }

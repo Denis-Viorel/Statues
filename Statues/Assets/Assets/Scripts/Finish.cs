@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class Finish : MonoBehaviour
 {
-    private int agentsNumber;
-    private int finishedAgentsNumber;
+    [SerializeField]private int agentsNumber;
+    [SerializeField]private int finishedAgentsNumber;
     [SerializeField]GlobalManager_SCPT globalManager;
     
     // Start is called before the first frame update

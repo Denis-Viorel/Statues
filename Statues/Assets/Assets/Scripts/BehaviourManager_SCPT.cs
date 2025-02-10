@@ -32,6 +32,7 @@ public class BehaviourManager_SCPT : MonoBehaviour
     [SerializeField] private CapsuleCollider cap;
     [SerializeField] private Rigidbody rb;
     [SerializeField] private FollowerEntity _follower;
+    private Coroutine coroutine;
     private float calm;
     private int calmMin;
     private int panic;
@@ -57,6 +58,7 @@ public class BehaviourManager_SCPT : MonoBehaviour
     //private SphereCollider crowdCheck;
 
     private bool redLightActive = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -125,7 +127,7 @@ public class BehaviourManager_SCPT : MonoBehaviour
         }
 
         _destination = new Vector3(0f, -6.31f, 11f);
-        StartCoroutine(SetDestination());
+        coroutine = StartCoroutine(SetDestination());
         agentAnimationManager.UpdateAnimationState(agentStatus);
     }
 
@@ -314,6 +316,8 @@ public class BehaviourManager_SCPT : MonoBehaviour
     }
 
     public void Death(){
+        StopCoroutine(coroutine);
+
         crowdManager.AgentCrowdEffect( calm, type, true);
         globalManager.calmGlobal -= calm/globalManager.initialAgentsNumber;
         calm = 0;
@@ -340,6 +344,9 @@ public class BehaviourManager_SCPT : MonoBehaviour
         /* Play victory animation */
         agentStatus = AgentStatus.Victory;
         agentAnimationManager.UpdateAnimationState(agentStatus);
+
+        /* Mark agent as finished */
+        _finish.AgentFinished();
     }
 
     void OnTriggerEnter(Collider other)
@@ -380,13 +387,12 @@ public class BehaviourManager_SCPT : MonoBehaviour
 
     IEnumerator SetDestination()
     {
-        _destination.x = transform.position.x;
-        _follower.destination = _destination;
         while (!_follower.reachedDestination)
         {
+            _destination.x = transform.position.x;
+            _follower.destination = _destination;
+            
             yield return new WaitForSeconds(0.5f);
         }
-
-        _finish.AgentFinished();
     }
 }

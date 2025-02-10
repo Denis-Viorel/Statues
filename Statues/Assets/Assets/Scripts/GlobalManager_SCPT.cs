@@ -56,6 +56,8 @@ public class GlobalManager_SCPT : MonoBehaviour
 
     [SerializeField] public UI_Manager managerUI;
     [SerializeField] private DesaturateImageEffect desaturate;
+    [SerializeField] private RandomManager randomManager;
+    [SerializeField] private WallManager wallManager;
 
     void Start()
     {
@@ -73,6 +75,17 @@ public class GlobalManager_SCPT : MonoBehaviour
         {
             circle = GameObject.Find("Circle");
         }
+
+        if(randomManager == null)
+        {
+            randomManager = GameObject.Find("RandomManager").GetComponent<RandomManager>();
+        }
+
+        if(wallManager == null)
+        {
+            wallManager = GameObject.Find("Main Camera").GetComponent<WallManager>();
+        }
+
         circle.SetActive(false);
 
         restartPlayerPosition = new Vector3(-11.0f, -6.31f, 49.0f);
@@ -125,11 +138,12 @@ public class GlobalManager_SCPT : MonoBehaviour
         }
     }
 
-    void GameOver()
+    void GameOver(int savedAgents)
     {
         circle.SetActive(true);
         roundNoUI.text = "You lost!";
         timerUI.text = score.ToString();
+        survivingAgentsUI.text = "You saved " + savedAgents.ToString() + "/" + initialAgentsNumber.ToString() + " players";
 
         HighscoreManager.SaveHighScore(score);
 
@@ -170,6 +184,10 @@ public class GlobalManager_SCPT : MonoBehaviour
         circle.SetActive(false);
 
         ResetAgents();
+        
+        randomManager.setNrTraps(round + UnityEngine.Random.Range(0, 3));
+        randomManager.SettingTraps();
+        wallManager.ClearWalls();
 
         yield return new WaitForSecondsRealtime(3f);
 
@@ -208,7 +226,7 @@ public class GlobalManager_SCPT : MonoBehaviour
     {
         if(activeAgentsNumber == 0)
         {
-            GameOver();
+            GameOver(activeAgentsNumber);
         }
     }
 }

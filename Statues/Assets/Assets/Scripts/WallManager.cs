@@ -7,6 +7,9 @@ public class WallManager : MonoBehaviour
     [SerializeField] private Camera camera;
     [SerializeField] private GameObject wall;
     LayerMask layerMask;
+
+    private List<GameObject> spawnedWalls = new List<GameObject>();
+
     // Start is called before the first frame update
     void Start()
     {
@@ -32,9 +35,18 @@ public class WallManager : MonoBehaviour
                 }
                 else if (targetHit != null)
                 {
-                    Instantiate(wall, hitPos, Quaternion.identity);
+                    spawnedWalls.Add(Instantiate(wall, hitPos, Quaternion.identity));
                 }
             }
         }
+    }
+
+    public void ClearWalls()
+    {
+        foreach (GameObject wall in spawnedWalls)
+        {
+            Destroy(wall);
+        }
+        spawnedWalls.Clear();
     }
 }
