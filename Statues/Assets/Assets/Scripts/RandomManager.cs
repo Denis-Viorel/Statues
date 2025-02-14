@@ -30,7 +30,7 @@ public class RandomManager : MonoBehaviour
     private List<GameObject> spawnedTraps = new List<GameObject>();
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         SettingTraps();
         SettingsAgents();

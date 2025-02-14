@@ -60,7 +60,7 @@ public class BehaviourManager_SCPT : MonoBehaviour
     private bool redLightActive = false;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         if (globalManager == null)
         {

@@ -51,7 +51,6 @@ public class GlobalManager_SCPT : MonoBehaviour
     public float calmGlobal = 0;
     public float initialCalmGlobal = 0;
     public int activeAgentsNumber = 0;
-    private bool initialAgentNumberCheck = true;
     public int initialAgentsNumber = 0;
 
     [SerializeField] public UI_Manager managerUI;
@@ -93,6 +92,9 @@ public class GlobalManager_SCPT : MonoBehaviour
         score = 0;
 
         runningSound.Play();
+        
+        initialAgentsNumber = activeAgentsNumber;
+        calmGlobal = initialCalmGlobal / initialAgentsNumber;
     }
 
      private void OnEnable()
@@ -107,13 +109,6 @@ public class GlobalManager_SCPT : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (initialAgentNumberCheck)
-        {
-            initialAgentsNumber = activeAgentsNumber;
-            initialAgentNumberCheck = false;
-            calmGlobal = initialCalmGlobal / initialAgentsNumber;
-        }
-        
         managerUI.UpdateCalmBar(calmGlobal);
 
         /* Apply the screen desaturation */
