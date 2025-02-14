@@ -29,7 +29,7 @@ public class WallManager : MonoBehaviour
 
     void Update()
     {
-        if(Input.GetMouseButtonDown(0))
+        if(Input.GetMouseButtonDown(0) && Time.timeScale == 1)
         {
             Ray ray = camera.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
@@ -55,11 +55,6 @@ public class WallManager : MonoBehaviour
         }
     }
 
-    private void HandleClick()
-    {
-
-    }
-
     public void ClearWalls()
     {
         currentWalls = 0;
@@ -79,13 +74,11 @@ public class WallManager : MonoBehaviour
     private void OnEnable()
     {
         OnMouseClick += TextWall;
-        OnMouseClick += HandleClick;
     }
 
     private void OnDisable()
     {
         OnMouseClick -= TextWall;
-        OnMouseClick -= HandleClick;
     }
 
     public static void TriggerClickEvent()
