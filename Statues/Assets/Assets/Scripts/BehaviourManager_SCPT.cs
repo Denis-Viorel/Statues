@@ -129,6 +129,7 @@ public class BehaviourManager_SCPT : MonoBehaviour
         _destination = new Vector3(0f, -6.31f, 11f);
         coroutine = StartCoroutine(SetDestination());
         agentAnimationManager.UpdateAnimationState(agentStatus);
+        gameObject.transform.rotation = Quaternion.Euler(0, 180, 0);
     }
 
     void GreenLight()
