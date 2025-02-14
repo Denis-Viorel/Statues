@@ -321,7 +321,7 @@ public class BehaviourManager_SCPT : MonoBehaviour
         crowdManager.AgentCrowdEffect( calm, type, true);
         globalManager.calmGlobal -= calm/globalManager.initialAgentsNumber;
         calm = 0;
-        agentDisplayManager.UpdateCalmBar(calm);
+        agentDisplayManager.gameObject.SetActive(false);
         crowdManager.enabled = false;
         globalManager.greenLight.RemoveListener(GreenLight);
         globalManager.redLight.RemoveListener(RedLight);
@@ -337,6 +337,7 @@ public class BehaviourManager_SCPT : MonoBehaviour
         /* Play death animation */
         agentStatus = AgentStatus.Dead;
         agentAnimationManager.UpdateAnimationState(agentStatus);
+
     }
 
     public void Victory()

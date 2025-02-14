@@ -95,6 +95,15 @@ public class GlobalManager_SCPT : MonoBehaviour
         runningSound.Play();
     }
 
+     private void OnEnable()
+    {
+        WallManager.OnMouseClick += LightSwitch;
+    }
+
+    private void OnDisable()
+    {
+        WallManager.OnMouseClick -= LightSwitch;
+    }
     // Update is called once per frame
     void Update()
     {
@@ -104,10 +113,7 @@ public class GlobalManager_SCPT : MonoBehaviour
             initialAgentNumberCheck = false;
             calmGlobal = initialCalmGlobal / initialAgentsNumber;
         }
-        if (Input.GetKeyDown(KeyCode.Mouse0))
-        {
-            LightSwitch();
-        }
+        
         managerUI.UpdateCalmBar(calmGlobal);
 
         /* Apply the screen desaturation */
@@ -185,6 +191,8 @@ public class GlobalManager_SCPT : MonoBehaviour
 
         ResetAgents();
         
+        wallManager.setNrWalls( round / 4 );
+
         randomManager.setNrTraps(round + UnityEngine.Random.Range(0, 3));
         randomManager.SettingTraps();
         wallManager.ClearWalls();

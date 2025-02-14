@@ -15,7 +15,7 @@ public class WallPathfindingUpdate : MonoBehaviour
     private void OnDestroy()
     {
         var guo = new GraphUpdateObject(GetComponent<Collider>().bounds);
-        AstarPath.active.UpdateGraphs(guo);
+        AstarPath.active?.UpdateGraphs(guo);
     }
 
     // Update is called once per frame
