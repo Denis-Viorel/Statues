@@ -24,7 +24,7 @@ public class MusicManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(SceneManager.GetActiveScene().name.Equals("SampleScene") && (isInGameScene == false))
+        if(SceneManager.GetActiveScene().name.Equals("Endless") && (isInGameScene == false))
         {
             isInGameScene = true;
             globalManager = GameObject.Find("GlobalManager").GetComponent<GlobalManager_SCPT>();
