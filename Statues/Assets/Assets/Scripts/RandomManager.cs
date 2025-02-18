@@ -102,7 +102,7 @@ public class RandomManager : MonoBehaviour
                 validPosition = true;
                 for (int j = 0; j < placedAgents.Count; j++)
                 {
-                    if (Vector2.Distance(randomPosition, placedAgents[j]) < 1)
+                    if (Vector2.Distance(randomPosition, placedAgents[j]) < 0.25f)
                     {
                         validPosition = false;
                         break;

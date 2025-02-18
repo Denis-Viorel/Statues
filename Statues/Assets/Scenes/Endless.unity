@@ -1758,8 +1758,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 0.9835917}
-  m_Center: {x: 0, y: 0, z: -0.008204365}
+  m_Size: {x: 1.0766977, y: 1.0100225, z: 1.4165255}
+  m_Center: {x: -0.0007422066, y: 0.005011177, z: -0.22467032}
 --- !u!4 &1097783219
 Transform:
   m_ObjectHideFlags: 0
@@ -2949,6 +2949,10 @@ PrefabInstance:
       propertyPath: nrTraps
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3771163359312206821, guid: 24d4e1b392ff1c64b98012b827e09684, type: 3}
+      propertyPath: nrAgents
+      value: 50
+      objectReference: {fileID: 0}
     - target: {fileID: 4389803386676227197, guid: 24d4e1b392ff1c64b98012b827e09684, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.48665237
@@ -3268,6 +3272,7 @@ MonoBehaviour:
   circle: {fileID: 95419298}
   timeBetweenRounds: 10
   restartPlayerPosition: {x: -11, y: -6.31, z: 49}
+  newRoundBonusValue: 0.1
   greenLight:
     m_PersistentCalls:
       m_Calls: []

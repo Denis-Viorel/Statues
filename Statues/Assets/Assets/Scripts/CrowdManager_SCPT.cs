@@ -27,7 +27,6 @@
             {
                 collidersInContact.Add(otherCollider);
             }
-            
         }
 
         public void AgentCrowdEffect( float calm, AgentType typeReceiving, bool isDeathEffect ){

@@ -38,6 +38,7 @@ public class GlobalManager_SCPT : MonoBehaviour
     [SerializeField] private GameObject circle;
     [SerializeField] private int timeBetweenRounds;
     [SerializeField] private Vector3 restartPlayerPosition;
+    [SerializeField] public float newRoundBonusValue;
     private int round;
     private int score;
 
@@ -164,6 +165,7 @@ public class GlobalManager_SCPT : MonoBehaviour
         Time.timeScale = 0;
         round++;
         score = score + round * savedAgents;
+        newRoundBonusValue += 1.0f/round;
 
         /* Display round info and timer */
         StartCoroutine(Countdown(timeBetweenRounds, savedAgents));
@@ -209,19 +211,25 @@ public class GlobalManager_SCPT : MonoBehaviour
         {
             BehaviourManager_SCPT playerBehaviour = player.GetComponent<BehaviourManager_SCPT>();
 
+            playerBehaviour.newRoundBonus(newRoundBonusValue);
+
             if (playerBehaviour.agentStatus != AgentStatus.Dead)
             {
-                localRestartPlayerPosition = restartPlayerPosition + new Vector3(2 * aliveAgentCol, 0, -2 * aliveAgentRow);
+                playerBehaviour.agentStatus = AgentStatus.Idle;
+                localRestartPlayerPosition = restartPlayerPosition + new Vector3(1 * aliveAgentCol, 0, -0.5f * aliveAgentRow);
                 player.transform.position = localRestartPlayerPosition;
                 aliveAgentCol++;
 
-                if (aliveAgentCol == 12)
+                playerBehaviour.ResetDestination();
+
+                if (aliveAgentCol == 24)
                 {
                     aliveAgentCol = 0;
                     aliveAgentRow++;
                 }
             }
         }
+        
         aliveAgentRow = 0;
     }
 

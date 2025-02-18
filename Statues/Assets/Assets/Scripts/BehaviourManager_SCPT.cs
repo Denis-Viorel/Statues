@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Pathfinding;
 using Unity.VisualScripting;
 using UnityEngine;
+using static UnityEngine.Rendering.DebugUI;
 using Random = UnityEngine.Random;
 
 public enum AgentType{
@@ -22,7 +23,7 @@ public enum AgentStatus{
 
 public class BehaviourManager_SCPT : MonoBehaviour
 {
-    AgentType type = new AgentType();
+    [SerializeField]AgentType type = new AgentType();
     public AgentStatus agentStatus = AgentStatus.Idle;
     [SerializeField]CrowdManager_SCPT crowdManager;
     [SerializeField]GlobalManager_SCPT globalManager;
@@ -32,7 +33,8 @@ public class BehaviourManager_SCPT : MonoBehaviour
     [SerializeField] private CapsuleCollider cap;
     [SerializeField] private Rigidbody rb;
     [SerializeField] private FollowerEntity _follower;
-    private Coroutine coroutine;
+    [SerializeField] private GameObject lowCalmImage;
+    public Coroutine coroutine;
     private float calm;
     private int calmMin;
     private int panic;
@@ -126,7 +128,7 @@ public class BehaviourManager_SCPT : MonoBehaviour
                 break;
         }
 
-        _destination = new Vector3(0f, -6.31f, 11f);
+        _destination = new Vector3(0f, -6.31f, 3.25f);
         coroutine = StartCoroutine(SetDestination());
         agentAnimationManager.UpdateAnimationState(agentStatus);
         gameObject.transform.rotation = Quaternion.Euler(0, 180, 0);
@@ -139,7 +141,8 @@ public class BehaviourManager_SCPT : MonoBehaviour
         _follower.isStopped = false;
 
         /* Set the agent to moving status -> Stops the move animation */
-        switch(agentSpeed)
+        if (agentStatus == AgentStatus.Victory) return;
+        switch (agentSpeed)
         {
             case "Fast":
                 agentStatus = AgentStatus.Running;
@@ -166,6 +169,8 @@ public class BehaviourManager_SCPT : MonoBehaviour
         }*/
 
         /* Set the agent to idle status -> Stops the move animation */
+        if (agentStatus == AgentStatus.Victory) return;
+
         agentStatus = AgentStatus.Idle;
         agentAnimationManager.UpdateAnimationState(agentStatus);
     }
@@ -179,6 +184,9 @@ public class BehaviourManager_SCPT : MonoBehaviour
         // Debug.Log("Valori initiale: " + "calm primit: " + value);
         // Debug.Log("Valori initiale: " + "tip agent primit: " + typeReceiving);
         // Debug.Log("Valori initiale: " + "calm: " + calm);
+
+        if (agentStatus == AgentStatus.Victory) return;
+
         switch ( type ){
             case AgentType.Protector:{
                 if (isDeathEffect)
@@ -244,6 +252,16 @@ public class BehaviourManager_SCPT : MonoBehaviour
         // Debug.Log($"Dupa switch: ID - {gameObject.GetInstanceID()}, tip - {type}, calm - {calm}, calm primit - {value}, tip agent primit - {typeReceiving}, moarte - {isDeathEffect}");
     }
 
+    public void newRoundBonus(float value)
+    {
+        value = Mathf.Clamp(value, 0.1f, 0.25f);
+
+        float calmBonusValue = Mathf.Clamp(value * calm, 0, 100 - calm);
+
+        calm += calmBonusValue;
+        globalManager.calmGlobal += calmBonusValue / globalManager.initialAgentsNumber;
+    }
+
     void SetTypeAgent(){
 
         if( globalManager != null ){
@@ -303,21 +321,31 @@ public class BehaviourManager_SCPT : MonoBehaviour
     }
 
     void PanicCheck(){
-         if( panic > calm ){
-             //daca calm e sub panic, sansa de panicare direct proportionala cu cat de mult e calm sub panic
-             panicCheck = Random.Range(0, panic);
-             Debug.Log($"Panic check: ID - {gameObject.GetInstanceID()}, valoare - {panicCheck}, calm - {calm}");
-             if(panicCheck > calm)
-             {
+        if (panic > calm)
+        {
+            //daca calm e sub panic, sansa de panicare direct proportionala cu cat de mult e calm sub panic
+            lowCalmImage.SetActive(true);
+            panicCheck = Random.Range(0, panic);
+            Debug.Log($"Panic check: ID - {gameObject.GetInstanceID()}, valoare - {panicCheck}, calm - {calm}");
+            if (panicCheck > calm)
+            {
                 isPanicked = true;
                 Death();
                 Debug.Log($"Panicat: {gameObject.GetInstanceID()}");
-             }
-         }
+            }
+        }
+        else
+        {
+            lowCalmImage.SetActive(false);
+        }
     }
 
     public void Death(){
         StopCoroutine(coroutine);
+
+        /* Set tag to DeadAgent */
+        this.transform.Find("AgentsDetectionSphere").gameObject.tag = "DeadAgent";
+        lowCalmImage.SetActive(false);
 
         crowdManager.AgentCrowdEffect( calm, type, true);
         globalManager.calmGlobal -= calm/globalManager.initialAgentsNumber;
@@ -329,7 +357,6 @@ public class BehaviourManager_SCPT : MonoBehaviour
         _follower.enabled = false;
         cap.enabled = false;
         rb.isKinematic = true;
-        this.enabled = false;
 
         /* Remove the agent from the alive agents pool */
         globalManager.activeAgentsNumber--;
@@ -339,6 +366,7 @@ public class BehaviourManager_SCPT : MonoBehaviour
         agentStatus = AgentStatus.Dead;
         agentAnimationManager.UpdateAnimationState(agentStatus);
 
+        this.enabled = false;
     }
 
     public void Victory()
@@ -357,13 +385,20 @@ public class BehaviourManager_SCPT : MonoBehaviour
         {
             Victory();
         }
+        if (other.tag == "DeadAgent")
+        {
+            calm -= 2.5f;
+            globalManager.calmGlobal -= 2.5f / globalManager.initialAgentsNumber;
+            Debug.Log("--- Dead effect: -2.5 calm ---");
+        }
     }
 
     void FixedUpdate(){
-        if( redLightActive && time <= Time.time ){
+        if(redLightActive && (time <= Time.time) && (agentStatus != AgentStatus.Victory)){
             time = Time.time + 1f;
             crowdManager.AgentCrowdEffect( calm, type, false );
             PanicCheck();
+
             calm -= _calmLossPerSecond;
             globalManager.calmGlobal -= _calmLossPerSecond/globalManager.initialAgentsNumber;
             Debug.Log("Calm loss per second: " +_calmLossPerSecond + " Active Agents: " 
@@ -389,12 +424,21 @@ public class BehaviourManager_SCPT : MonoBehaviour
 
     IEnumerator SetDestination()
     {
-        while (!_follower.reachedDestination)
+        while (true)
         {
             _destination.x = transform.position.x;
             _follower.destination = _destination;
             
             yield return new WaitForSeconds(0.5f);
+        }
+    }
+
+    public void ResetDestination()
+    {
+        if (coroutine != null)
+        {
+            StopCoroutine(coroutine);
+            coroutine = StartCoroutine(SetDestination());
         }
     }
 }
