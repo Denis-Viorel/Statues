@@ -156,6 +156,7 @@ public class GlobalManager_SCPT : MonoBehaviour
     {
         //Wait for the specified delay time before continuing.
         yield return new WaitForSeconds(delayTime);
+        Destroy(GameObject.Find("BackgroundMusic"));
         SceneManager.LoadScene("MainMenu");
         //Do the action after the delay time has finished.
     }
