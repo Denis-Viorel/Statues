@@ -5,11 +5,14 @@ using UnityEngine;
 public class AnimationManager : MonoBehaviour
 {
     [SerializeField]Animator animator;
+    [SerializeField]ParticleSystem blood;
 
     // Start is called before the first frame update
     void Start()
     {
         animator = GetComponent<Animator>();
+        blood = GetComponentInChildren<ParticleSystem>();
+        blood.Pause();
     }
 
     public void UpdateAnimationState(AgentStatus state)
@@ -36,6 +39,7 @@ public class AnimationManager : MonoBehaviour
                 animator.SetBool("isDead", true);
                 animator.SetBool("isRunning", false);
                 animator.SetBool("isWalking", false);
+                startBloodSpash();
                 break;
 
             case AgentStatus.Idle:
@@ -50,4 +54,19 @@ public class AnimationManager : MonoBehaviour
 
         }
     }
+
+    private void startBloodSpash()
+    {
+
+        blood.Play();
+
+        StartCoroutine(Delay(1.0f));
+    }
+
+    IEnumerator Delay(float delayTime)
+    {
+        yield return new WaitForSeconds(delayTime);
+        blood.Pause();
+    }
+
 }

@@ -7,6 +7,7 @@ public class Finish : MonoBehaviour
     [SerializeField]private int agentsNumber;
     [SerializeField]private int finishedAgentsNumber;
     [SerializeField]GlobalManager_SCPT globalManager;
+    [SerializeField]CrowdManager_SCPT crowdManager;
     
     // Start is called before the first frame update
     void Start()
@@ -39,6 +40,7 @@ public class Finish : MonoBehaviour
         agentsNumber = globalManager.activeAgentsNumber;
         finishedAgentsNumber++;
         Debug.Log("agentsNumber" + agentsNumber + " finished " + finishedAgentsNumber);
+
         if (finishedAgentsNumber == agentsNumber)
         {
             StartCoroutine(Delay(5.0f));

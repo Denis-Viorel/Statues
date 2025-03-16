@@ -43,4 +43,24 @@
                 }
         }
 
-    }
+        public void AgentFinishEffect(float calm)
+        {
+            GameObject[] allPlayer = GameObject.FindGameObjectsWithTag("Player");
+            foreach (GameObject player in allPlayer)
+            {
+                BehaviourManager_SCPT playerBehaviour = player.GetComponent<BehaviourManager_SCPT>();
+
+                if (playerBehaviour != null)
+                {
+                    if (playerBehaviour.GetCalm() + 10f <= 100f)
+                    {
+                        playerBehaviour.AddCalm(calm);
+                    }
+                }
+                else
+                {
+                    Debug.LogWarning($"Could not find BehaviourManager on or above {playerBehaviour.gameObject.name}");
+                }
+            }   
+        }
+}

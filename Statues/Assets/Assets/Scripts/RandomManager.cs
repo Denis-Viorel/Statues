@@ -11,6 +11,8 @@ public class RandomManager : MonoBehaviour
     [SerializeField] private float y = -2.73f;
     [SerializeField] private GameObject wolfTrap;
     [SerializeField] private GameObject spikeTrap;
+    [SerializeField] private GameObject axeTrapSupport;
+    [SerializeField] private GameObject axeTrapRotPoint;
 
     [SerializeField] private int nrTraps = 1;
 
@@ -43,7 +45,10 @@ public class RandomManager : MonoBehaviour
     }
     public void SettingTraps()
     {
-        foreach(GameObject trap in spawnedTraps)
+        axeTrapSupport.transform.position = new Vector3(axeTrapSupport.transform.position.x, axeTrapSupport.transform.position.y, Random.Range(36f, 15f));
+        axeTrapRotPoint.transform.position = new Vector3(Random.Range(-0.3f, 0.217f), axeTrapRotPoint.transform.position.y, axeTrapRotPoint.transform.position.z);
+
+        foreach (GameObject trap in spawnedTraps)
         {
             Destroy(trap);
         }

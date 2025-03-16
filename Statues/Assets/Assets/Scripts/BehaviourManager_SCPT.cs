@@ -179,6 +179,16 @@ public class BehaviourManager_SCPT : MonoBehaviour
         return calm;
     }
 
+    public void AddCalm(float calmReceived)
+    {
+        /* Apply extra calm only if the agent is not a Saboteur */
+        if (this.type == AgentType.Protector || this.type == AgentType.Normie)
+        {
+            calm = calm + calmReceived;
+            globalManager.calmGlobal += 1 / globalManager.initialAgentsNumber;
+        }
+    }
+
     public void ModifyCalm( float value, AgentType typeReceiving, bool isDeathEffect ){
         // Debug.Log($"Valori initiale: ID - {gameObject.GetInstanceID()}, tip - {type}, calm - {calm}, calm primit - {value}, tip agent primit - {typeReceiving}, moarte - {isDeathEffect}");
         // Debug.Log("Valori initiale: " + "calm primit: " + value);
@@ -384,6 +394,9 @@ public class BehaviourManager_SCPT : MonoBehaviour
         if (other.tag == "Finish")
         {
             Victory();
+
+            /* Add calm when an agent finishes the round */
+            crowdManager.AgentFinishEffect(10f);
         }
         if (other.tag == "DeadAgent")
         {
